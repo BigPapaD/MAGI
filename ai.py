@@ -3,13 +3,10 @@ import re
 
 
 def is_yes_or_no_question(question: str, key: str):
+    openai.api_base = 'http://localhost:4891/v1'
     openai.api_key = key
     response = openai.ChatCompletion.create(
-        model='gpt-4',
-        logit_bias={
-            9642: 100,  # Yes
-            2822: 100  # No
-        },
+        model='Llama 3 8B Instruct',
         max_tokens=1,
         messages=[
             {'role': 'system', 'content': 'You answer with a simple "yes" or "no".'},
@@ -48,9 +45,10 @@ def get_system_prompt(personality: str):
 
 
 def get_answer(question: str, personality: str, key: str):
+    openai.api_base = "http://localhost:4891/v1"
     openai.api_key = key
     response = openai.ChatCompletion.create(
-        model='gpt-4',
+        model='Llama 3 8B Instruct',
         messages=[
             {'role': 'system', 'content': get_system_prompt(personality)},
             {'role': 'user', 'content': question},
@@ -61,9 +59,10 @@ def get_answer(question: str, personality: str, key: str):
 
 
 def classify_answer(question: str, personality: str, answer: str, key: str):
+    openai.api_base = "http://localhost:4891/v1"
     openai.api_key = key
     response = openai.ChatCompletion.create(
-        model='gpt-4',
+        model='Llama 3 8B Instruct',
         messages=[
             {'role': 'system', 'content': get_system_prompt(personality)},
             {'role': 'user', 'content': question},
